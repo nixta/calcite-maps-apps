@@ -223,6 +223,8 @@
 
     var app;
 
+    var autoLoop = true;
+
     require(["esri/Map",
       "esri/Basemap",
       "esri/views/MapView",
@@ -471,7 +473,12 @@
                 updateGraphic(point);
                 updateDistanceUI(point);
               } else {
-                navigateFinsihed();
+                if (autoLoop === true) {
+                  reset();
+                  start();
+                } else {
+                  navigateFinished();
+                }
               }
               app.index++;
             }
@@ -524,7 +531,7 @@
         query(".distance-value").innerHTML((Math.round(app.trailDistance*100)/100).toFixed(2));
       }
 
-      function navigateFinsihed() {
+      function navigateFinished() {
         // query("#play > span").replaceClass("glyphicon-play","glyphicon-pause");
         setPlayUI(true);
         app.animating = false;
